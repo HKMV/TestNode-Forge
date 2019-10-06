@@ -61,8 +61,38 @@ router.post('/buckets', async (req, res, next) => {
     payload.bucketKey = config.credentials.client_id.toLowerCase() + '-' + req.body.bucketKey;
     payload.policyKey = 'transient'; // expires in 24h
     try {
+        console.log(`req:`,req);
+        console.log(`bucketKey:`,req.body.bucketKey);
         // Create a bucket using [BucketsApi](https://github.com/Autodesk-Forge/forge-api-nodejs-client/blob/master/docs/BucketsApi.md#createBucket).
         await new BucketsApi().createBucket(payload, {}, req.oauth_client, req.oauth_token);
+        res.status(200).end();
+    } catch(err) {
+        next(err);
+    }
+});
+
+// POST /api/forge/oss/delbucket - delete a new bucket.
+// Request body must be a valid JSON in the form of { "bucketKey": "<new_bucket_name>" }.
+router.post('/delbucket', async (req, res, next) => {
+    try {
+        console.log(`req:`,req);
+        console.log(`bucketKey:`,req.body.bucketKey);
+        // Create a bucket using [BucketsApi](https://github.com/Autodesk-Forge/forge-api-nodejs-client/blob/master/docs/BucketsApi.md#createBucket).
+        await new BucketsApi().deleteBucket(req.body.bucketKey, req.oauth_client,req.oauth_token);
+        res.status(200).end();
+    } catch(err) {
+        next(err);
+    }
+});
+
+// DELETE /api/forge/oss/buckets - delete a bucket.
+// Request body must be a valid JSON in the form of { "bucketKey": "<new_bucket_name>" }.
+router.delete('/buckets', async (req, res, next) => {
+    try {
+        console.log(`req:`,req);
+        console.log(`bucketKey:`,req.body.bucketKey);
+        // Create a bucket using [BucketsApi](https://github.com/Autodesk-Forge/forge-api-nodejs-client/blob/master/docs/BucketsApi.md#createBucket).
+        await new BucketsApi().deleteBucket(req.body.bucketKey, req.oauth_client,req.oauth_token);
         res.status(200).end();
     } catch(err) {
         next(err);
