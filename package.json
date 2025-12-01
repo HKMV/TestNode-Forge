@@ -9,7 +9,7 @@
   "author": "Serenity",
   "license": "ISC",
   "dependencies": {
-    "express": "^5.0.1",
+    "express": "^5.2.0",
     "forge-apis": "^0.9.9",
     "multer": "^2.0.2"
   }
